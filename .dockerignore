@@ -21,7 +21,6 @@ Makefile
 
 
 # Docker specific
+.dockerignore
 *Dockerfile*
 docker-compose.yml
-# can we ignore .dockerignore though?
-.dockerignore
