@@ -31,10 +31,6 @@ func (u *systemUsecase) GetHealth() (*HealthResp, error) {
 	return &resp, nil
 }
 
-type TimeResp struct {
-	CurrentTimeUnix int64 `json:"current_time_unix"`
-}
-
 type HealthResp struct {
 	DBOnline    bool `json:"db_online"`
 	CacheOnline bool `json:"cache_online"`

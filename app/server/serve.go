@@ -42,7 +42,7 @@ func Serve() {
 	db := db.Get().DB
 
 	// repository
-	sysRepo := systemRepo.NewPgSystemRepository(db)
+	sysRepo := systemRepo.NewSystemRepository(db)
 
 	// use cases
 	sysUseCase := systemUseCase.NewSystemUsecase(sysRepo)
