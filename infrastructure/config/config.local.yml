@@ -1,0 +1,14 @@
+app:
+  port: 8000
+  read_timeout: 30
+  write_timeout: 30
+  idle_timeout: 30
+
+database:
+  host: db
+  port: 3306
+  name: kabikha
+  username: kabikha
+  password: kabikha
+  ssl_mode: disable
+  debug: true
