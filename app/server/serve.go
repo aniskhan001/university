@@ -10,6 +10,11 @@ import (
 	systemDelivery "university/app/system/delivery"
 	systemRepo "university/app/system/repository"
 	systemUseCase "university/app/system/usecase"
+
+	deptDelivery "university/app/department/delivery"
+	deptRepo "university/app/department/repository"
+	deptUseCase "university/app/department/usecase"
+
 	"university/infrastructure/config"
 	"university/infrastructure/db"
 	"university/infrastructure/middlewares"
@@ -43,12 +48,15 @@ func Serve() {
 
 	// repository
 	sysRepo := systemRepo.NewSystemRepository(db)
+	deptRepo := deptRepo.NewDeptRepository(db)
 
 	// use cases
 	sysUseCase := systemUseCase.NewSystemUsecase(sysRepo)
+	deptUseCase := deptUseCase.NewDeptUsecase(deptRepo)
 
 	// delivery
 	systemDelivery.NewSystemHandler(e, sysUseCase)
+	deptDelivery.NewDeptHandler(e, deptUseCase)
 
 	// start http server
 	go func() {

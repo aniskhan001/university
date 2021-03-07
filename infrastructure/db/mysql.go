@@ -3,6 +3,7 @@ package db
 import (
 	"fmt"
 	"time"
+	deptModel "university/app/department/model"
 	"university/infrastructure/config"
 
 	"gorm.io/driver/mysql"
@@ -60,7 +61,13 @@ func Connect() error {
 		dbInstance.SetMaxOpenConns(cnfg.MaxOpenConn)
 	}
 
-	instance.LogMode(cnfg.Debug)
+	// Model migration
+	if err = instance.AutoMigrate(
+		&deptModel.Dept{},
+	); err != nil {
+		return err
+	}
+
 	db = &mysqlClient{DB: instance}
 	return nil
 }

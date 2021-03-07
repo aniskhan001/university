@@ -8,12 +8,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// SystemHandler  represent the httphandler for order
+// SystemHandler represent the httphandler
 type SystemHandler struct {
 	Usecase usecase.SystemUsecase
 }
 
-// NewSystemHandler will initialize the orders/ resources endpoint
+// NewSystemHandler will initialize the / resources endpoint
 func NewSystemHandler(e *echo.Echo, us usecase.SystemUsecase) {
 	handler := &SystemHandler{
 		Usecase: us,
@@ -24,7 +24,7 @@ func NewSystemHandler(e *echo.Echo, us usecase.SystemUsecase) {
 
 // Root will let you see what you can slash 🐲
 func (sh *SystemHandler) Root(c echo.Context) error {
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "Kaj korilei khadyo mele!"})
+	return c.JSON(http.StatusOK, map[string]interface{}{"message": "CLEAN study brings CLEAN results!"})
 }
 
 // Health will let you know the heart beats ❤️
