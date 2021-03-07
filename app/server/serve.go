@@ -25,7 +25,7 @@ func Serve() {
 		os.Exit(1)
 	}
 
-	// connect to postgres DB
+	// connect to database
 	if err := db.Connect(); err != nil {
 		logrus.Errorln(err)
 		os.Exit(1)

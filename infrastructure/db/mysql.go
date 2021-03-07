@@ -24,18 +24,9 @@ func Get() *mysqlClient {
 // Connect database, must call once before server boot to Get() the db instance
 func Connect() error {
 	cnfg := config.Get().Database
-	userName := cnfg.Username
-	pass := cnfg.Password
-	host := cnfg.Host
-	port := cnfg.Port
-	dbname := cnfg.Name
 	dbSource := fmt.Sprintf(
 		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=true",
-		userName,
-		pass,
-		host,
-		port,
-		dbname,
+		cnfg.Username, cnfg.Password, cnfg.Host, cnfg.Port, cnfg.Name,
 	)
 
 	// open connection to mysql db
