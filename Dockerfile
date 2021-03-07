@@ -1,4 +1,4 @@
-ARG GO_VERSION=1.15
+ARG GO_VERSION=1.16
 
 # Start from base golang image
 FROM golang:${GO_VERSION}-alpine AS builder
