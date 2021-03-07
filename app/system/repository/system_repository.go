@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"kabikha/infrastructure/db"
+	"university/infrastructure/db"
 
 	"github.com/jinzhu/gorm"
 )

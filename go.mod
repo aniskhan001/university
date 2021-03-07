@@ -1,4 +1,4 @@
-module kabikha
+module university
 
 go 1.15
 

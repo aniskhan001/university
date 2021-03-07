@@ -2,8 +2,8 @@ package db
 
 import (
 	"fmt"
-	"kabikha/infrastructure/config"
 	"time"
+	"university/infrastructure/config"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

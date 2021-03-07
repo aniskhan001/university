@@ -1,9 +1,9 @@
 package delivery
 
 import (
-	"kabikha/app/errors"
-	"kabikha/app/system/usecase"
 	"net/http"
+	"university/app/errors"
+	"university/app/system/usecase"
 
 	"github.com/labstack/echo/v4"
 )

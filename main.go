@@ -1,7 +1,7 @@
 package main
 
 import (
-	"kabikha/cmd"
+	"university/cmd"
 )
 
 func main() {

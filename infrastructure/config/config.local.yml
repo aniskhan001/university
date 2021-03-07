@@ -7,8 +7,8 @@ app:
 database:
   host: db
   port: 3306
-  name: kabikha
-  username: kabikha
-  password: kabikha
+  name: university
+  username: university
+  password: university
   ssl_mode: disable
   debug: true

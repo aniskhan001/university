@@ -1,4 +1,4 @@
-PROJECT_NAME := kabikha
+PROJECT_NAME := university
 PKG_LIST := $(shell go list ${PROJECT_NAME}/... | grep -v /vendor/)
 
 .PHONY: run test coverage clean

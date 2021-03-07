@@ -2,11 +2,11 @@ version: "3.5"
 
 services:
   server:
-    container_name: kabikha_server
+    container_name: university_server
     build:
       context: .
       dockerfile: dev.Dockerfile
-    command: ["--command=./kabikha serve"]
+    command: ["--command=./university serve"]
     ports:
       - 8000:8000
     depends_on:
@@ -17,17 +17,17 @@ services:
       - ./:/project
 
   db:
-    container_name: kabikha_mysql
+    container_name: university_mysql
     image: mysql:8.0
     ports:
       - 3308:3306
     environment:
-      - MYSQL_USER=kabikha
-      - MYSQL_PASSWORD=kabikha
-      - MYSQL_ROOT_PASSWORD=kabikha
-      - MYSQL_DATABASE=kabikha
+      - MYSQL_USER=university
+      - MYSQL_PASSWORD=university
+      - MYSQL_ROOT_PASSWORD=university
+      - MYSQL_DATABASE=university
     volumes:
-      - kabikha_data:/var/lib/mysql
+      - university_data:/var/lib/mysql
 
 volumes:
-  kabikha_data:
+  university_data:

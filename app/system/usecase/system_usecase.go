@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"kabikha/app/system/repository"
+	"university/app/system/repository"
 )
 
 type SystemUsecase interface {

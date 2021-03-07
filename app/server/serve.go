@@ -7,12 +7,12 @@ import (
 	"os/signal"
 	"time"
 
-	systemDelivery "kabikha/app/system/delivery"
-	systemRepo "kabikha/app/system/repository"
-	systemUseCase "kabikha/app/system/usecase"
-	"kabikha/infrastructure/config"
-	"kabikha/infrastructure/db"
-	"kabikha/infrastructure/middlewares"
+	systemDelivery "university/app/system/delivery"
+	systemRepo "university/app/system/repository"
+	systemUseCase "university/app/system/usecase"
+	"university/infrastructure/config"
+	"university/infrastructure/db"
+	"university/infrastructure/middlewares"
 
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
