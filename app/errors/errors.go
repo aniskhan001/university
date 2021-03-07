@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 var (
@@ -16,6 +17,8 @@ var (
 
 func getStatusCode(err error) int {
 	switch err {
+	case gorm.ErrRecordNotFound:
+		return http.StatusNotFound
 	case ErrNotFound:
 		return http.StatusNotFound
 	case ErrConflict:

@@ -3,7 +3,7 @@ package repository
 import (
 	"university/infrastructure/db"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type systemRepository struct {
@@ -22,7 +22,11 @@ type SystemRepository interface {
 }
 
 func (db *systemRepository) DBCheck() (bool, error) {
-	if err := db.DB.DB().Ping(); err != nil {
+	dbInstance, err := db.DB.DB()
+	if err != nil {
+		return false, err
+	}
+	if err = dbInstance.Ping(); err != nil {
 		return false, err
 	}
 	return true, nil

@@ -5,8 +5,9 @@ import (
 	"time"
 	"university/infrastructure/config"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type mysqlClient struct {
@@ -29,21 +30,34 @@ func Connect() error {
 		cnfg.Username, cnfg.Password, cnfg.Host, cnfg.Port, cnfg.Name,
 	)
 
+	// setting log level of Databases
+	logLevel := logger.Error
+	if cnfg.Debug {
+		logLevel = logger.Info
+	}
+
 	// open connection to mysql db
-	instance, err := gorm.Open("mysql", dbSource)
+	instance, err := gorm.Open(mysql.Open(dbSource), &gorm.Config{
+		Logger: logger.Default.LogMode(logLevel),
+	})
 	if err != nil {
 		return err
 	}
 
 	// connection pool settings
+	dbInstance, err := instance.DB()
+	if err != nil {
+		return err
+	}
+
 	if cnfg.MaxLifeTime != 0 {
-		instance.DB().SetConnMaxLifetime(cnfg.MaxLifeTime * time.Second)
+		dbInstance.SetConnMaxLifetime(cnfg.MaxLifeTime * time.Second)
 	}
 	if cnfg.MaxIdleConn != 0 {
-		instance.DB().SetMaxIdleConns(cnfg.MaxIdleConn)
+		dbInstance.SetMaxIdleConns(cnfg.MaxIdleConn)
 	}
 	if cnfg.MaxOpenConn != 0 {
-		instance.DB().SetMaxOpenConns(cnfg.MaxOpenConn)
+		dbInstance.SetMaxOpenConns(cnfg.MaxOpenConn)
 	}
 
 	instance.LogMode(cnfg.Debug)
