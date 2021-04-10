@@ -32,6 +32,7 @@ type DatabaseConfig struct {
 	MaxLifeTime time.Duration `mapstructure:"max_life_time"`
 	MaxIdleConn int           `mapstructure:"max_idle_conn"`
 	MaxOpenConn int           `mapstructure:"max_open_conn"`
+	BatchSize   int           `mapstructure:"batch_size"`
 	Debug       bool          `mapstructure:"debug"`
 }
 

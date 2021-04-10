@@ -39,7 +39,8 @@ func Connect() error {
 
 	// open connection to mysql db
 	instance, err := gorm.Open(mysql.Open(dbSource), &gorm.Config{
-		Logger: logger.Default.LogMode(logLevel),
+		CreateBatchSize: cnfg.BatchSize,
+		Logger:          logger.Default.LogMode(logLevel),
 	})
 	if err != nil {
 		return err

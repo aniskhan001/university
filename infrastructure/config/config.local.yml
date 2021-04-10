@@ -11,4 +11,5 @@ database:
   username: university
   password: university
   ssl_mode: disable
+  batch_size: 200
   debug: true

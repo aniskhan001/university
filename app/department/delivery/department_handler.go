@@ -20,6 +20,8 @@ func NewDeptHandler(e *echo.Echo, us usecase.DeptUsecase) {
 		Usecase: us,
 	}
 	e.GET("/list", handler.List)
+	e.POST("/create", handler.Insert)
+	e.POST("/create-many", handler.InsertMany)
 	e.GET("/get/:id", handler.GetByID)
 }
 
@@ -40,6 +42,24 @@ func (dh *DeptHandler) GetByID(c echo.Context) error {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
 	}
 	resp, err := dh.Usecase.Get(c, uint(id))
+	if err != nil {
+		return c.JSON(errors.RespondError(err))
+	}
+	return c.JSON(http.StatusOK, resp)
+}
+
+// Insert a single department into the system
+func (dh *DeptHandler) Insert(c echo.Context) error {
+	resp, err := dh.Usecase.Insert(c)
+	if err != nil {
+		return c.JSON(errors.RespondError(err))
+	}
+	return c.JSON(http.StatusOK, resp)
+}
+
+// InsertMany departments into the system
+func (dh *DeptHandler) InsertMany(c echo.Context) error {
+	resp, err := dh.Usecase.InsertMany(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}

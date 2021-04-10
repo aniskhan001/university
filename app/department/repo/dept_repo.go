@@ -1,4 +1,4 @@
-package repository
+package repo
 
 import (
 	"university/app/department/model"
@@ -13,6 +13,8 @@ type deptRepository struct {
 
 type DeptRepository interface {
 	Get(uint) (*model.Dept, error)
+	Insert(*model.Dept) (*model.Dept, error)
+	InsertMany([]model.Dept) ([]model.Dept, error)
 	GetAll() ([]model.Dept, error)
 }
 
@@ -26,8 +28,7 @@ func NewDeptRepository(DB *gorm.DB) DeptRepository {
 func (db *deptRepository) Get(id uint) (*model.Dept, error) {
 	var dept model.Dept
 
-	res := db.Select("id", "name").Where("id = ?", id).First(&dept)
-	if res.Error != nil {
+	if res := db.Select("id", "name").Where("id = ?", id).First(&dept); res.Error != nil {
 		return nil, res.Error
 	}
 
@@ -36,9 +37,26 @@ func (db *deptRepository) Get(id uint) (*model.Dept, error) {
 
 func (db *deptRepository) GetAll() ([]model.Dept, error) {
 	var depts []model.Dept
-	res := db.Select("id", "name").Find(&depts)
-	if res.Error != nil {
+
+	if res := db.Select("id", "name").Find(&depts); res.Error != nil {
 		return nil, res.Error
 	}
+
+	return depts, nil
+}
+
+func (db *deptRepository) Insert(dept *model.Dept) (*model.Dept, error) {
+	if res := db.Create(dept); res.Error != nil {
+		return nil, res.Error
+	}
+
+	return dept, nil
+}
+
+func (db *deptRepository) InsertMany(depts []model.Dept) ([]model.Dept, error) {
+	if res := db.Create(depts); res.Error != nil {
+		return nil, res.Error
+	}
+
 	return depts, nil
 }

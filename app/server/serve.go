@@ -8,11 +8,11 @@ import (
 	"time"
 
 	systemDelivery "university/app/system/delivery"
-	systemRepo "university/app/system/repository"
+	systemRepo "university/app/system/repo"
 	systemUseCase "university/app/system/usecase"
 
 	deptDelivery "university/app/department/delivery"
-	deptRepo "university/app/department/repository"
+	deptRepo "university/app/department/repo"
 	deptUseCase "university/app/department/usecase"
 
 	"university/infrastructure/config"

@@ -1,18 +1,16 @@
 package usecase
 
-import (
-	"university/app/system/repository"
-)
+import "university/app/system/repo"
 
 type SystemUsecase interface {
 	GetHealth() (*HealthResp, error)
 }
 
 type systemUsecase struct {
-	repo repository.SystemRepository
+	repo repo.SystemRepository
 }
 
-func NewSystemUsecase(repo repository.SystemRepository) SystemUsecase {
+func NewSystemUsecase(repo repo.SystemRepository) SystemUsecase {
 	return &systemUsecase{
 		repo: repo,
 	}
