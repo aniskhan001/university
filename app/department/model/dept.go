@@ -2,7 +2,7 @@ package model
 
 import "gorm.io/gorm"
 
-type Dept struct {
+type Department struct {
 	gorm.Model
 	Name string `json:"name"`
 }

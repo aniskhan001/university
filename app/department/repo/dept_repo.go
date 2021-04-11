@@ -12,10 +12,11 @@ type deptRepository struct {
 }
 
 type DeptRepository interface {
-	Get(uint) (*model.Dept, error)
-	Insert(*model.Dept) (*model.Dept, error)
-	InsertMany([]model.Dept) ([]model.Dept, error)
-	GetAll() ([]model.Dept, error)
+	Get(uint) (*model.Department, error)
+	GetAll() ([]model.Department, error)
+	Insert(*model.Department) (*model.Department, error)
+	InsertMany([]model.Department) ([]model.Department, error)
+	Edit(uint, *model.Department) (*model.Department, error)
 }
 
 // NewDeptRepository will create an object that represent the DeptRepository interface
@@ -25,8 +26,8 @@ func NewDeptRepository(DB *gorm.DB) DeptRepository {
 	}
 }
 
-func (db *deptRepository) Get(id uint) (*model.Dept, error) {
-	var dept model.Dept
+func (db *deptRepository) Get(id uint) (*model.Department, error) {
+	var dept model.Department
 
 	if res := db.Select("id", "name").Where("id = ?", id).First(&dept); res.Error != nil {
 		return nil, res.Error
@@ -35,8 +36,8 @@ func (db *deptRepository) Get(id uint) (*model.Dept, error) {
 	return &dept, nil
 }
 
-func (db *deptRepository) GetAll() ([]model.Dept, error) {
-	var depts []model.Dept
+func (db *deptRepository) GetAll() ([]model.Department, error) {
+	var depts []model.Department
 
 	if res := db.Select("id", "name").Find(&depts); res.Error != nil {
 		return nil, res.Error
@@ -45,7 +46,7 @@ func (db *deptRepository) GetAll() ([]model.Dept, error) {
 	return depts, nil
 }
 
-func (db *deptRepository) Insert(dept *model.Dept) (*model.Dept, error) {
+func (db *deptRepository) Insert(dept *model.Department) (*model.Department, error) {
 	if res := db.Create(dept); res.Error != nil {
 		return nil, res.Error
 	}
@@ -53,10 +54,19 @@ func (db *deptRepository) Insert(dept *model.Dept) (*model.Dept, error) {
 	return dept, nil
 }
 
-func (db *deptRepository) InsertMany(depts []model.Dept) ([]model.Dept, error) {
+func (db *deptRepository) InsertMany(depts []model.Department) ([]model.Department, error) {
 	if res := db.Create(depts); res.Error != nil {
 		return nil, res.Error
 	}
 
 	return depts, nil
+}
+
+func (db *deptRepository) Edit(id uint, dept *model.Department) (*model.Department, error) {
+	res := db.Model(model.Department{}).Where("id = ?", id).Updates(*dept)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return db.Get(id)
 }

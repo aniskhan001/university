@@ -64,7 +64,7 @@ func Connect() error {
 
 	// Model migration
 	if err = instance.AutoMigrate(
-		&deptModel.Dept{},
+		&deptModel.Department{},
 	); err != nil {
 		return err
 	}
