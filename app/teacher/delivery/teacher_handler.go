@@ -21,6 +21,7 @@ func NewTeacherHandler(e *echo.Echo, us usecase.TeacherUsecase) {
 	}
 	e.GET("/teacher/get/:id", handler.GetByID)
 	e.GET("/teacher/list", handler.List)
+	e.GET("/teacher/list-from-dept/:id", handler.ListFromDept)
 	e.POST("/teacher/create", handler.Insert)
 	e.POST("/teacher/create-many", handler.InsertMany)
 	e.PATCH("/teacher/edit/:id", handler.Edit)
@@ -36,16 +37,33 @@ func (th *TeacherHandler) List(c echo.Context) error {
 	return c.JSON(http.StatusOK, items)
 }
 
+// ListFromDept return all teachers from a specific department
+func (th *TeacherHandler) ListFromDept(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(errors.RespondError(errors.ErrBadRequest))
+	}
+
+	items, err := th.Usecase.ListByDept(c, uint(id))
+	if err != nil {
+		return c.JSON(errors.RespondError(err))
+	}
+
+	return c.JSON(http.StatusOK, items)
+}
+
 // GetByID returns single teacher by ID
 func (th *TeacherHandler) GetByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
 	}
+
 	resp, err := th.Usecase.Get(c, uint(id))
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
+
 	return c.JSON(http.StatusOK, resp)
 }
 
@@ -55,6 +73,7 @@ func (th *TeacherHandler) Insert(c echo.Context) error {
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
+
 	return c.JSON(http.StatusOK, resp)
 }
 
@@ -64,10 +83,11 @@ func (th *TeacherHandler) InsertMany(c echo.Context) error {
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
+
 	return c.JSON(http.StatusOK, resp)
 }
 
-// Edit a single teacher into the system
+// Edit a single teacher
 func (th *TeacherHandler) Edit(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -78,5 +98,6 @@ func (th *TeacherHandler) Edit(c echo.Context) error {
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
+
 	return c.JSON(http.StatusOK, resp)
 }

@@ -67,7 +67,7 @@ func (dh *DeptHandler) InsertMany(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-// Edit a single department into the system
+// Edit a single department
 func (dh *DeptHandler) Edit(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

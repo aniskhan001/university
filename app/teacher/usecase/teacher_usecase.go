@@ -9,6 +9,7 @@ import (
 type TeacherUsecase interface {
 	Get(echo.Context, uint) (*repo.TeacherResp, error)
 	List(echo.Context) ([]repo.TeacherResp, error)
+	ListByDept(echo.Context, uint) ([]repo.TeacherResp, error)
 	Insert(echo.Context) (*repo.TeacherResp, error)
 	InsertMany(echo.Context) ([]repo.TeacherResp, error)
 	Edit(echo.Context, uint) (*repo.TeacherResp, error)
@@ -35,6 +36,15 @@ func (du *teacherUsecase) Get(c echo.Context, id uint) (*repo.TeacherResp, error
 
 func (du *teacherUsecase) List(c echo.Context) ([]repo.TeacherResp, error) {
 	dept, err := du.repo.GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	return repo.ToTeachersResponse(dept), nil
+}
+
+func (du *teacherUsecase) ListByDept(c echo.Context, deptID uint) ([]repo.TeacherResp, error) {
+	dept, err := du.repo.GetAllFromDept(deptID)
 	if err != nil {
 		return nil, err
 	}

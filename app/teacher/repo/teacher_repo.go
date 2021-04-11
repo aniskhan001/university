@@ -16,6 +16,7 @@ type TeacherRepository interface {
 	Insert(*model.Teacher) (*model.Teacher, error)
 	InsertMany([]model.Teacher) ([]model.Teacher, error)
 	GetAll() ([]model.Teacher, error)
+	GetAllFromDept(uint) ([]model.Teacher, error)
 	Edit(uint, *model.Teacher) (*model.Teacher, error)
 }
 
@@ -40,6 +41,16 @@ func (db *teacherRepository) GetAll() ([]model.Teacher, error) {
 	var teachers []model.Teacher
 
 	if res := db.Select("id", "name").Find(&teachers); res.Error != nil {
+		return nil, res.Error
+	}
+
+	return teachers, nil
+}
+
+func (db *teacherRepository) GetAllFromDept(deptID uint) ([]model.Teacher, error) {
+	var teachers []model.Teacher
+
+	if res := db.Select("id", "name").Where("department = ?", deptID).Find(&teachers); res.Error != nil {
 		return nil, res.Error
 	}
 
