@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 	deptModel "university/app/department/model"
+	teacherModel "university/app/teacher/model"
 	"university/infrastructure/config"
 
 	"gorm.io/driver/mysql"
@@ -65,6 +66,7 @@ func Connect() error {
 	// Model migration
 	if err = instance.AutoMigrate(
 		&deptModel.Department{},
+		&teacherModel.Teacher{},
 	); err != nil {
 		return err
 	}
