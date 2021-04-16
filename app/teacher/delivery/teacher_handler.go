@@ -20,6 +20,7 @@ func NewTeacherHandler(e *echo.Echo, us usecase.TeacherUsecase) {
 		Usecase: us,
 	}
 	e.GET("/teacher/get/:id", handler.GetByID)
+	e.GET("/teacher/get-details/:id", handler.GetDetailsByID)
 	e.GET("/teacher/list", handler.List)
 	e.GET("/teacher/list-from-dept/:id", handler.ListFromDept)
 	e.POST("/teacher/create", handler.Insert)
@@ -60,6 +61,21 @@ func (th *TeacherHandler) GetByID(c echo.Context) error {
 	}
 
 	resp, err := th.Usecase.Get(c, uint(id))
+	if err != nil {
+		return c.JSON(errors.RespondError(err))
+	}
+
+	return c.JSON(http.StatusOK, resp)
+}
+
+// GetDetailsByID returns single department by ID
+func (th *TeacherHandler) GetDetailsByID(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(errors.RespondError(errors.ErrBadRequest))
+	}
+
+	resp, err := th.Usecase.GetDetails(c, uint(id))
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}

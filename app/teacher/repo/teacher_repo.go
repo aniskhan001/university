@@ -30,7 +30,7 @@ func NewTeacherRepository(DB *gorm.DB) TeacherRepository {
 func (db *teacherRepository) Get(id uint) (*model.Teacher, error) {
 	var teacher model.Teacher
 
-	if res := db.Select("id", "name").Where("id = ?", id).First(&teacher); res.Error != nil {
+	if res := db.Select("id", "name", "department").Where("id = ?", id).First(&teacher); res.Error != nil {
 		return nil, res.Error
 	}
 

@@ -3,11 +3,14 @@ package usecase
 import (
 	"university/app/teacher/repo"
 
+	deptRepo "university/app/department/repo"
+
 	"github.com/labstack/echo/v4"
 )
 
 type TeacherUsecase interface {
 	Get(echo.Context, uint) (*repo.TeacherResp, error)
+	GetDetails(echo.Context, uint) (*repo.TeacherDetailsResp, error)
 	List(echo.Context) ([]repo.TeacherResp, error)
 	ListByDept(echo.Context, uint) ([]repo.TeacherResp, error)
 	Insert(echo.Context) (*repo.TeacherResp, error)
@@ -16,12 +19,14 @@ type TeacherUsecase interface {
 }
 
 type teacherUsecase struct {
-	repo repo.TeacherRepository
+	repo     repo.TeacherRepository
+	deptRepo deptRepo.DeptRepository
 }
 
-func NewTeacherUsecase(repo repo.TeacherRepository) TeacherUsecase {
+func NewTeacherUsecase(repo repo.TeacherRepository, deptRepo deptRepo.DeptRepository) TeacherUsecase {
 	return &teacherUsecase{
-		repo: repo,
+		repo:     repo,
+		deptRepo: deptRepo,
 	}
 }
 
@@ -32,6 +37,20 @@ func (du *teacherUsecase) Get(c echo.Context, id uint) (*repo.TeacherResp, error
 	}
 
 	return repo.ToTeacherResponse(dept), nil
+}
+
+func (du *teacherUsecase) GetDetails(c echo.Context, id uint) (*repo.TeacherDetailsResp, error) {
+	teacher, err := du.repo.Get(id)
+	if err != nil {
+		return nil, err
+	}
+
+	dept, err := du.deptRepo.Get(teacher.Department)
+	if err != nil {
+		return nil, err
+	}
+
+	return repo.TeacherDetailsResponse(teacher, dept), nil
 }
 
 func (du *teacherUsecase) List(c echo.Context) ([]repo.TeacherResp, error) {

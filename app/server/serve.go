@@ -58,7 +58,7 @@ func Serve() {
 	// use cases
 	sysUseCase := systemUseCase.NewSystemUsecase(sysRepo)
 	deptUseCase := deptUseCase.NewDeptUsecase(deptRepo)
-	teacherUseCase := teacherUseCase.NewTeacherUsecase(teacherRepo)
+	teacherUseCase := teacherUseCase.NewTeacherUsecase(teacherRepo, deptRepo)
 
 	// delivery
 	systemDelivery.NewSystemHandler(e, sysUseCase)

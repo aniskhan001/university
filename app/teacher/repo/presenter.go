@@ -1,6 +1,16 @@
 package repo
 
-import "university/app/teacher/model"
+import (
+	deptModel "university/app/department/model"
+	"university/app/teacher/model"
+)
+
+type TeacherDetailsResp struct {
+	ID          uint   `json:"id"`
+	Name        string `json:"name"`
+	Department  string `json:"department"`
+	Designation string `json:"designation"`
+}
 
 // Making more readable response object for the users to consume
 func ToTeacherResponse(teacher *model.Teacher) *TeacherResp {
@@ -18,4 +28,13 @@ func ToTeachersResponse(teachers []model.Teacher) []TeacherResp {
 		res = append(res, *ToTeacherResponse(&teacher))
 	}
 	return res
+}
+
+func TeacherDetailsResponse(teacher *model.Teacher, dept *deptModel.Department) *TeacherDetailsResp {
+	return &TeacherDetailsResp{
+		ID:          teacher.ID,
+		Name:        teacher.Name,
+		Department:  dept.Name,
+		Designation: teacher.Designation,
+	}
 }
