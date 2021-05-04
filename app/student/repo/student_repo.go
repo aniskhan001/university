@@ -1,8 +1,8 @@
 package repo
 
 import (
-	"university/app/student/model"
 	"university/infrastructure/db"
+	"university/model"
 
 	"gorm.io/gorm"
 )

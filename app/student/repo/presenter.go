@@ -1,8 +1,7 @@
 package repo
 
 import (
-	deptModel "university/app/department/model"
-	"university/app/student/model"
+	"university/model"
 )
 
 type StudentDetailsResp struct {
@@ -30,7 +29,7 @@ func ToStudentsResponse(students []model.Student) []StudentResp {
 	return res
 }
 
-func StudentDetailsResponse(student *model.Student, dept *deptModel.Department) *StudentDetailsResp {
+func StudentDetailsResponse(student *model.Student, dept *model.Department) *StudentDetailsResp {
 	return &StudentDetailsResp{
 		ID:         student.ID,
 		Name:       student.Name,

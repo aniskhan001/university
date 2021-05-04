@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"university/app/server"
+	"university/server"
 
 	"github.com/spf13/cobra"
 )

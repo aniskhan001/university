@@ -25,5 +25,6 @@ Makefile
 
 # Docker specific
 .dockerignore
-*Dockerfile*
+Dockerfile
+dev.Dockerfile
 docker-compose.yml

@@ -1,6 +1,6 @@
 package repo
 
-import "university/app/department/model"
+import "university/model"
 
 // Making more readable response object for the users to consume
 func ToDeptResponse(dept *model.Department) *DeptResp {

@@ -3,10 +3,8 @@ package db
 import (
 	"fmt"
 	"time"
-	deptModel "university/app/department/model"
-	studentModel "university/app/student/model"
-	teacherModel "university/app/teacher/model"
 	"university/infrastructure/config"
+	"university/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -66,9 +64,9 @@ func Connect() error {
 
 	// Model migration
 	if err = instance.AutoMigrate(
-		&deptModel.Department{},
-		&teacherModel.Teacher{},
-		&studentModel.Student{},
+		&model.Department{},
+		&model.Teacher{},
+		&model.Student{},
 	); err != nil {
 		return err
 	}

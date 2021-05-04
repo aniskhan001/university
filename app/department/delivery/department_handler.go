@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"university/app/department/repo"
 	"university/app/department/usecase"
-	"university/app/errors"
+	"university/errors"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"

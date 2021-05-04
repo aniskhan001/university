@@ -2,9 +2,9 @@ package delivery
 
 import (
 	"net/http"
-	"university/app/errors"
 	"university/app/system/repo"
 	"university/app/system/usecase"
+	"university/errors"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"

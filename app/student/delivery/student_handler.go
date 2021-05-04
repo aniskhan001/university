@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"strconv"
 	deptRepo "university/app/department/repo"
-	"university/app/errors"
 	"university/app/student/repo"
 	"university/app/student/usecase"
+	"university/errors"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
