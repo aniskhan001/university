@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 	deptModel "university/app/department/model"
+	studentModel "university/app/student/model"
 	teacherModel "university/app/teacher/model"
 	"university/infrastructure/config"
 
@@ -67,6 +68,7 @@ func Connect() error {
 	if err = instance.AutoMigrate(
 		&deptModel.Department{},
 		&teacherModel.Teacher{},
+		&studentModel.Student{},
 	); err != nil {
 		return err
 	}

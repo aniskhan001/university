@@ -8,6 +8,7 @@ import (
 	"time"
 
 	deptDelivery "university/app/department/delivery"
+	studentDelivery "university/app/student/delivery"
 	systemDelivery "university/app/system/delivery"
 	teacherDelivery "university/app/teacher/delivery"
 
@@ -46,6 +47,7 @@ func Serve() {
 	systemDelivery.RegisterEndpoints(e, db)
 	deptDelivery.RegisterEndpoints(e, db)
 	teacherDelivery.RegisterEndpoints(e, db)
+	studentDelivery.RegisterEndpoints(e, db)
 
 	// start http server
 	go func() {
