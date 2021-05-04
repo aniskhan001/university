@@ -1,8 +1,6 @@
 package repo
 
 import (
-	"university/infrastructure/db"
-
 	"gorm.io/gorm"
 )
 
@@ -13,7 +11,7 @@ type systemRepository struct {
 // NewSystemRepository will create an object that represent the article.Repository interface
 func NewSystemRepository(DB *gorm.DB) SystemRepository {
 	return &systemRepository{
-		DB: db.Get().DB,
+		DB: DB,
 	}
 }
 

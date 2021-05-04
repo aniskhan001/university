@@ -1,7 +1,6 @@
 package repo
 
 import (
-	"university/infrastructure/db"
 	"university/model"
 
 	"gorm.io/gorm"
@@ -22,7 +21,7 @@ type DeptRepository interface {
 // NewDeptRepository will create an object that represent the DeptRepository interface
 func NewDeptRepository(DB *gorm.DB) DeptRepository {
 	return &deptRepository{
-		DB: db.Get().DB,
+		DB: DB,
 	}
 }
 

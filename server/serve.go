@@ -13,7 +13,7 @@ import (
 	teacherDelivery "university/app/teacher/delivery"
 
 	"university/infrastructure/config"
-	"university/infrastructure/db"
+	"university/infrastructure/db/mysql"
 	"university/infrastructure/middlewares"
 
 	"github.com/labstack/echo/v4"
@@ -28,10 +28,11 @@ func Serve() {
 	}
 
 	// connect to database
-	if err := db.Connect(); err != nil {
+	if err := mysql.Connect(); err != nil {
 		logrus.Errorln(err)
 		os.Exit(1)
 	}
+	db := mysql.Get().DB
 
 	// http server setup
 	e := echo.New()
@@ -41,7 +42,6 @@ func Serve() {
 		logrus.Errorln(err)
 		os.Exit(1)
 	}
-	db := db.Get().DB
 
 	// register endpoints
 	systemDelivery.RegisterEndpoints(e, db)
