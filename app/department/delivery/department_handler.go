@@ -11,13 +11,14 @@ import (
 	"gorm.io/gorm"
 )
 
-// DeptHandler represent the httphandler
-type DeptHandler struct {
+// deptHandler represent the httphandler
+type deptHandler struct {
 	Usecase usecase.DeptUsecase
 }
 
-func RegisterDeptEndpoints(e *echo.Echo, db *gorm.DB) {
-	handler := &DeptHandler{
+// RegisterEndpoints register all the listed endpoints with application server
+func RegisterEndpoints(e *echo.Echo, db *gorm.DB) {
+	handler := &deptHandler{
 		Usecase: usecase.NewDeptUsecase(
 			repo.NewDeptRepository(db),
 		),
@@ -31,7 +32,7 @@ func RegisterDeptEndpoints(e *echo.Echo, db *gorm.DB) {
 }
 
 // List return all departments
-func (dh *DeptHandler) List(c echo.Context) error {
+func (dh *deptHandler) List(c echo.Context) error {
 	items, err := dh.Usecase.List(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
@@ -41,7 +42,7 @@ func (dh *DeptHandler) List(c echo.Context) error {
 }
 
 // GetByID returns single department by ID
-func (dh *DeptHandler) GetByID(c echo.Context) error {
+func (dh *deptHandler) GetByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
@@ -54,7 +55,7 @@ func (dh *DeptHandler) GetByID(c echo.Context) error {
 }
 
 // Insert a single department into the system
-func (dh *DeptHandler) Insert(c echo.Context) error {
+func (dh *deptHandler) Insert(c echo.Context) error {
 	resp, err := dh.Usecase.Insert(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
@@ -63,7 +64,7 @@ func (dh *DeptHandler) Insert(c echo.Context) error {
 }
 
 // InsertMany departments into the system
-func (dh *DeptHandler) InsertMany(c echo.Context) error {
+func (dh *deptHandler) InsertMany(c echo.Context) error {
 	resp, err := dh.Usecase.InsertMany(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
@@ -72,7 +73,7 @@ func (dh *DeptHandler) InsertMany(c echo.Context) error {
 }
 
 // Edit a single department
-func (dh *DeptHandler) Edit(c echo.Context) error {
+func (dh *deptHandler) Edit(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))

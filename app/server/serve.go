@@ -43,9 +43,9 @@ func Serve() {
 	db := db.Get().DB
 
 	// register endpoints
-	systemDelivery.RegisterSystemEndpoints(e, db)
-	deptDelivery.RegisterDeptEndpoints(e, db)
-	teacherDelivery.RegisterTeacherEndpoints(e, db)
+	systemDelivery.RegisterEndpoints(e, db)
+	deptDelivery.RegisterEndpoints(e, db)
+	teacherDelivery.RegisterEndpoints(e, db)
 
 	// start http server
 	go func() {

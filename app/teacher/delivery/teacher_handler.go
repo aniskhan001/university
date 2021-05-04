@@ -12,13 +12,14 @@ import (
 	"gorm.io/gorm"
 )
 
-// TeacherHandler represent the httphandler
-type TeacherHandler struct {
+// teacherHandler represent the httphandler
+type teacherHandler struct {
 	Usecase usecase.TeacherUsecase
 }
 
-func RegisterTeacherEndpoints(e *echo.Echo, db *gorm.DB) {
-	handler := &TeacherHandler{
+// RegisterEndpoints register all the listed endpoints with application server
+func RegisterEndpoints(e *echo.Echo, db *gorm.DB) {
+	handler := &teacherHandler{
 		Usecase: usecase.NewTeacherUsecase(
 			repo.NewTeacherRepository(db),
 			deptRepo.NewDeptRepository(db),
@@ -36,7 +37,7 @@ func RegisterTeacherEndpoints(e *echo.Echo, db *gorm.DB) {
 }
 
 // List return all teachers
-func (th *TeacherHandler) List(c echo.Context) error {
+func (th *teacherHandler) List(c echo.Context) error {
 	items, err := th.Usecase.List(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
@@ -46,7 +47,7 @@ func (th *TeacherHandler) List(c echo.Context) error {
 }
 
 // ListFromDept return all teachers from a specific department
-func (th *TeacherHandler) ListFromDept(c echo.Context) error {
+func (th *teacherHandler) ListFromDept(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
@@ -61,7 +62,7 @@ func (th *TeacherHandler) ListFromDept(c echo.Context) error {
 }
 
 // GetByID returns single teacher by ID
-func (th *TeacherHandler) GetByID(c echo.Context) error {
+func (th *teacherHandler) GetByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
@@ -76,7 +77,7 @@ func (th *TeacherHandler) GetByID(c echo.Context) error {
 }
 
 // GetDetailsByID returns single department by ID
-func (th *TeacherHandler) GetDetailsByID(c echo.Context) error {
+func (th *teacherHandler) GetDetailsByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
@@ -91,7 +92,7 @@ func (th *TeacherHandler) GetDetailsByID(c echo.Context) error {
 }
 
 // Insert a single teacher into the system
-func (th *TeacherHandler) Insert(c echo.Context) error {
+func (th *teacherHandler) Insert(c echo.Context) error {
 	resp, err := th.Usecase.Insert(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
@@ -101,7 +102,7 @@ func (th *TeacherHandler) Insert(c echo.Context) error {
 }
 
 // InsertMany teachers into the system
-func (th *TeacherHandler) InsertMany(c echo.Context) error {
+func (th *teacherHandler) InsertMany(c echo.Context) error {
 	resp, err := th.Usecase.InsertMany(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
@@ -111,7 +112,7 @@ func (th *TeacherHandler) InsertMany(c echo.Context) error {
 }
 
 // Edit a single teacher
-func (th *TeacherHandler) Edit(c echo.Context) error {
+func (th *teacherHandler) Edit(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
