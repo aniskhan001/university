@@ -3,10 +3,13 @@ package delivery
 import (
 	"net/http"
 	"strconv"
+	deptRepo "university/app/department/repo"
 	"university/app/errors"
+	"university/app/teacher/repo"
 	"university/app/teacher/usecase"
 
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 // TeacherHandler represent the httphandler
@@ -14,18 +17,22 @@ type TeacherHandler struct {
 	Usecase usecase.TeacherUsecase
 }
 
-// NewTeacherHandler will initialize the endpoints for teacher domain
-func NewTeacherHandler(e *echo.Echo, us usecase.TeacherUsecase) {
+func RegisterTeacherEndpoints(e *echo.Echo, db *gorm.DB) {
 	handler := &TeacherHandler{
-		Usecase: us,
+		Usecase: usecase.NewTeacherUsecase(
+			repo.NewTeacherRepository(db),
+			deptRepo.NewDeptRepository(db),
+		),
 	}
-	e.GET("/teacher/get/:id", handler.GetByID)
-	e.GET("/teacher/get-details/:id", handler.GetDetailsByID)
-	e.GET("/teacher/list", handler.List)
-	e.GET("/teacher/list-from-dept/:id", handler.ListFromDept)
-	e.POST("/teacher/create", handler.Insert)
-	e.POST("/teacher/create-many", handler.InsertMany)
-	e.PATCH("/teacher/edit/:id", handler.Edit)
+
+	e.GET("/teacher/:id", handler.GetByID)
+	e.GET("/teacher/:id/details", handler.GetDetailsByID)
+	e.GET("/teachers", handler.List)
+	// todo: move this to department domain?
+	e.GET("/department/:id/teachers", handler.ListFromDept)
+	e.POST("/teacher", handler.Insert)
+	e.POST("/teachers", handler.InsertMany)
+	e.PATCH("/teacher/:id", handler.Edit)
 }
 
 // List return all teachers

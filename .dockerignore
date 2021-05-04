@@ -19,6 +19,9 @@
 .DS_Store
 Makefile
 
+# Git specific
+.git/**
+.gitignore
 
 # Docker specific
 .dockerignore

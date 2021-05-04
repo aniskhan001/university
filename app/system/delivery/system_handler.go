@@ -3,9 +3,11 @@ package delivery
 import (
 	"net/http"
 	"university/app/errors"
+	"university/app/system/repo"
 	"university/app/system/usecase"
 
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 // SystemHandler represent the httphandler
@@ -13,11 +15,13 @@ type SystemHandler struct {
 	Usecase usecase.SystemUsecase
 }
 
-// NewSystemHandler will initialize the / resources endpoint
-func NewSystemHandler(e *echo.Echo, us usecase.SystemUsecase) {
+func RegisterSystemEndpoints(e *echo.Echo, db *gorm.DB) {
 	handler := &SystemHandler{
-		Usecase: us,
+		Usecase: usecase.NewSystemUsecase(
+			repo.NewSystemRepository(db),
+		),
 	}
+
 	e.GET("/", handler.Root)
 	e.GET("/h34l7h", handler.Health)
 }

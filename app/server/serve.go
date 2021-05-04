@@ -7,17 +7,9 @@ import (
 	"os/signal"
 	"time"
 
-	systemDelivery "university/app/system/delivery"
-	systemRepo "university/app/system/repo"
-	systemUseCase "university/app/system/usecase"
-
 	deptDelivery "university/app/department/delivery"
-	deptRepo "university/app/department/repo"
-	deptUseCase "university/app/department/usecase"
-
+	systemDelivery "university/app/system/delivery"
 	teacherDelivery "university/app/teacher/delivery"
-	teacherRepo "university/app/teacher/repo"
-	teacherUseCase "university/app/teacher/usecase"
 
 	"university/infrastructure/config"
 	"university/infrastructure/db"
@@ -50,20 +42,10 @@ func Serve() {
 	}
 	db := db.Get().DB
 
-	// repository
-	sysRepo := systemRepo.NewSystemRepository(db)
-	deptRepo := deptRepo.NewDeptRepository(db)
-	teacherRepo := teacherRepo.NewTeacherRepository(db)
-
-	// use cases
-	sysUseCase := systemUseCase.NewSystemUsecase(sysRepo)
-	deptUseCase := deptUseCase.NewDeptUsecase(deptRepo)
-	teacherUseCase := teacherUseCase.NewTeacherUsecase(teacherRepo, deptRepo)
-
-	// delivery
-	systemDelivery.NewSystemHandler(e, sysUseCase)
-	deptDelivery.NewDeptHandler(e, deptUseCase)
-	teacherDelivery.NewTeacherHandler(e, teacherUseCase)
+	// register endpoints
+	systemDelivery.RegisterSystemEndpoints(e, db)
+	deptDelivery.RegisterDeptEndpoints(e, db)
+	teacherDelivery.RegisterTeacherEndpoints(e, db)
 
 	// start http server
 	go func() {

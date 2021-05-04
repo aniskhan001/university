@@ -3,10 +3,12 @@ package delivery
 import (
 	"net/http"
 	"strconv"
+	"university/app/department/repo"
 	"university/app/department/usecase"
 	"university/app/errors"
 
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 // DeptHandler represent the httphandler
@@ -14,11 +16,13 @@ type DeptHandler struct {
 	Usecase usecase.DeptUsecase
 }
 
-// NewDeptHandler will initialize the endpoints for department domain
-func NewDeptHandler(e *echo.Echo, us usecase.DeptUsecase) {
+func RegisterDeptEndpoints(e *echo.Echo, db *gorm.DB) {
 	handler := &DeptHandler{
-		Usecase: us,
+		Usecase: usecase.NewDeptUsecase(
+			repo.NewDeptRepository(db),
+		),
 	}
+
 	e.GET("/list", handler.List)
 	e.POST("/create", handler.Insert)
 	e.PATCH("/edit/:id", handler.Edit)
