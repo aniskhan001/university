@@ -2,7 +2,16 @@ package repo
 
 import (
 	"university/model"
+
+	"gorm.io/gorm"
 )
+
+type Presenter struct {
+	ID          uint   `json:"id"`
+	Name        string `json:"name"`
+	Department  uint   `json:"department"`
+	Designation string `json:"designation"`
+}
 
 type DetailPresenter struct {
 	ID          uint   `json:"id"`
@@ -11,7 +20,6 @@ type DetailPresenter struct {
 	Designation string `json:"designation"`
 }
 
-// Making more readable response object for the users to consume
 func ToPresenter(data *model.Teacher) *Presenter {
 	return &Presenter{
 		ID:          data.ID,
@@ -36,4 +44,22 @@ func ToDetailPresenter(data *model.Teacher, deptData *model.Department) *DetailP
 		Department:  deptData.Name,
 		Designation: data.Designation,
 	}
+}
+
+func ToModel(data *Presenter) *model.Teacher {
+	return &model.Teacher{
+		// let DB decide the ID, resetting ID to 0 if provided by client
+		Model:       gorm.Model{ID: 0},
+		Name:        data.Name,
+		Department:  data.Department,
+		Designation: data.Designation,
+	}
+}
+
+func ToModelList(data []Presenter) []model.Teacher {
+	res := []model.Teacher{}
+	for _, d := range data {
+		res = append(res, *ToModel(&d))
+	}
+	return res
 }

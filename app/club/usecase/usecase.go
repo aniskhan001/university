@@ -7,10 +7,10 @@ import (
 )
 
 type Usecase interface {
-	Get(echo.Context, uint) (*repo.Response, error)
-	List(echo.Context) ([]repo.Response, error)
-	Insert(echo.Context) (*repo.Response, error)
-	Edit(echo.Context, uint) (*repo.Response, error)
+	Get(echo.Context, uint) (*repo.Presenter, error)
+	List(echo.Context) ([]repo.Presenter, error)
+	Insert(echo.Context) (*repo.Presenter, error)
+	Edit(echo.Context, uint) (*repo.Presenter, error)
 }
 
 type usecase struct {
@@ -23,27 +23,27 @@ func Init(repo repo.Repo) Usecase {
 	}
 }
 
-func (uc *usecase) Get(c echo.Context, id uint) (*repo.Response, error) {
+func (uc *usecase) Get(c echo.Context, id uint) (*repo.Presenter, error) {
 	res, err := uc.repo.Get(id)
 	if err != nil {
 		return nil, err
 	}
 
-	return repo.ToResponse(res), nil
+	return repo.ToPresenter(res), nil
 }
 
-func (uc *usecase) List(c echo.Context) ([]repo.Response, error) {
+func (uc *usecase) List(c echo.Context) ([]repo.Presenter, error) {
 	res, err := uc.repo.GetAll()
 	if err != nil {
 		return nil, err
 	}
 
-	return repo.ToListResponse(res), nil
+	return repo.ToPresenterList(res), nil
 }
 
-func (uc *usecase) Insert(c echo.Context) (*repo.Response, error) {
+func (uc *usecase) Insert(c echo.Context) (*repo.Presenter, error) {
 	// reading data from request
-	resp := repo.Response{}
+	resp := repo.Presenter{}
 	if err := c.Bind(&resp); err != nil {
 		return nil, err
 	}
@@ -54,12 +54,12 @@ func (uc *usecase) Insert(c echo.Context) (*repo.Response, error) {
 		return nil, err
 	}
 
-	return repo.ToResponse(res), nil
+	return repo.ToPresenter(res), nil
 }
 
-func (uc *usecase) Edit(c echo.Context, id uint) (*repo.Response, error) {
+func (uc *usecase) Edit(c echo.Context, id uint) (*repo.Presenter, error) {
 	// reading data from request
-	resp := repo.Response{}
+	resp := repo.Presenter{}
 	if err := c.Bind(&resp); err != nil {
 		return nil, err
 	}
@@ -70,5 +70,5 @@ func (uc *usecase) Edit(c echo.Context, id uint) (*repo.Response, error) {
 		return nil, err
 	}
 
-	return repo.ToResponse(res), nil
+	return repo.ToPresenter(res), nil
 }
