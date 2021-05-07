@@ -27,7 +27,7 @@ func Init(DB *gorm.DB) Repo {
 }
 
 func (db *repo) Get(id uint) (*model.Teacher, error) {
-	var res model.Teacher
+	res := model.Teacher{}
 
 	if op := db.Select("id", "name", "department").Where("id = ?", id).First(&res); op.Error != nil {
 		return nil, op.Error
@@ -37,7 +37,7 @@ func (db *repo) Get(id uint) (*model.Teacher, error) {
 }
 
 func (db *repo) GetAll() ([]model.Teacher, error) {
-	var res []model.Teacher
+	res := []model.Teacher{}
 
 	if op := db.Select("id", "name").Find(&res); op.Error != nil {
 		return nil, op.Error
@@ -47,7 +47,7 @@ func (db *repo) GetAll() ([]model.Teacher, error) {
 }
 
 func (db *repo) GetAllFromDept(deptID uint) ([]model.Teacher, error) {
-	var res []model.Teacher
+	res := []model.Teacher{}
 
 	if op := db.Select("id", "name").Where("department = ?", deptID).Find(&res); op.Error != nil {
 		return nil, op.Error

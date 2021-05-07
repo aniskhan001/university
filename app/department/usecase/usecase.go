@@ -44,7 +44,7 @@ func (uc *usecase) List(c echo.Context) ([]repo.Presenter, error) {
 
 func (uc *usecase) Insert(c echo.Context) (*repo.Presenter, error) {
 	// reading data from request
-	var data repo.Presenter
+	data := repo.Presenter{}
 	if err := c.Bind(&data); err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (uc *usecase) Insert(c echo.Context) (*repo.Presenter, error) {
 
 func (uc *usecase) InsertMany(c echo.Context) ([]repo.Presenter, error) {
 	// reading data from request
-	var data []repo.Presenter
+	data := []repo.Presenter{}
 	if err := c.Bind(&data); err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (uc *usecase) InsertMany(c echo.Context) ([]repo.Presenter, error) {
 
 func (uc *usecase) Edit(c echo.Context, id uint) (*repo.Presenter, error) {
 	// reading data from request
-	var data repo.Presenter
+	data := repo.Presenter{}
 	if err := c.Bind(&data); err != nil {
 		return nil, err
 	}

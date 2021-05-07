@@ -43,7 +43,7 @@ func (uc *usecase) List(c echo.Context) ([]repo.Response, error) {
 
 func (uc *usecase) Insert(c echo.Context) (*repo.Response, error) {
 	// reading data from request
-	var resp repo.Response
+	resp := repo.Response{}
 	if err := c.Bind(&resp); err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (uc *usecase) Insert(c echo.Context) (*repo.Response, error) {
 
 func (uc *usecase) Edit(c echo.Context, id uint) (*repo.Response, error) {
 	// reading data from request
-	var resp repo.Response
+	resp := repo.Response{}
 	if err := c.Bind(&resp); err != nil {
 		return nil, err
 	}

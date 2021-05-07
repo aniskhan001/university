@@ -1,5 +1,5 @@
-# University [WIP]
-A sample project in Go that tries to follow the [CLEAN architecture][clean-architecture] and the [12-factor methodology][12-factor-app] using [SOLID design principle][solid-design-principle]. This application offers to manage entities(departments, clubs, teachers, students, etc.) in a university by providing a REST API interface.
+# University [WIP] 🎓
+A sample project in Go that tries to follow the [CLEAN architecture][clean-architecture] and the [12-factor methodology][12-factor-app] using [SOLID design principle][solid-design-principle]. This application offers to manage entities(departments, clubs, teachers, students, etc.) in a university by providing a REST API.
 
 ## Configuration
 * This project uses `.editorconfig`
