@@ -4,7 +4,7 @@ import (
 	"university/model"
 )
 
-type StudentDetailsResp struct {
+type DetailPresenter struct {
 	ID         uint   `json:"id"`
 	Name       string `json:"name"`
 	Department string `json:"department"`
@@ -12,28 +12,28 @@ type StudentDetailsResp struct {
 }
 
 // Making more readable response object for the users to consume
-func ToStudentResponse(student *model.Student) *StudentResp {
-	return &StudentResp{
-		ID:         student.ID,
-		Name:       student.Name,
-		Department: student.Department,
-		Clubs:      student.Clubs,
+func ToPresenter(data *model.Student) *Presenter {
+	return &Presenter{
+		ID:         data.ID,
+		Name:       data.Name,
+		Department: data.Department,
+		Clubs:      data.Clubs,
 	}
 }
 
-func ToStudentsResponse(students []model.Student) []StudentResp {
-	res := []StudentResp{}
-	for _, student := range students {
-		res = append(res, *ToStudentResponse(&student))
+func ToPresenterList(data []model.Student) []Presenter {
+	res := []Presenter{}
+	for _, d := range data {
+		res = append(res, *ToPresenter(&d))
 	}
 	return res
 }
 
-func StudentDetailsResponse(student *model.Student, dept *model.Department) *StudentDetailsResp {
-	return &StudentDetailsResp{
-		ID:         student.ID,
-		Name:       student.Name,
-		Department: dept.Name,
-		Clubs:      student.Clubs,
+func ToDetailPresenter(data *model.Student, deptData *model.Department) *DetailPresenter {
+	return &DetailPresenter{
+		ID:         data.ID,
+		Name:       data.Name,
+		Department: deptData.Name,
+		Clubs:      data.Clubs,
 	}
 }

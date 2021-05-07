@@ -12,63 +12,63 @@ import (
 	"gorm.io/gorm"
 )
 
-// teacherHandler represent the httphandler
-type teacherHandler struct {
-	Usecase usecase.TeacherUsecase
+// handler represent the httphandler
+type handler struct {
+	Usecase usecase.Usecase
 }
 
 // RegisterEndpoints register all the listed endpoints with application server
 func RegisterEndpoints(e *echo.Echo, db *gorm.DB) {
-	handler := &teacherHandler{
-		Usecase: usecase.NewTeacherUsecase(
-			repo.NewTeacherRepository(db),
-			deptRepo.NewDeptRepository(db),
+	h := &handler{
+		Usecase: usecase.Init(
+			repo.Init(db),
+			deptRepo.Init(db),
 		),
 	}
 
-	e.GET("/teacher/:id", handler.GetByID)
-	e.GET("/teacher/:id/details", handler.GetDetailsByID)
-	e.GET("/teachers", handler.List)
+	e.GET("/teacher/:id", h.GetByID)
+	e.GET("/teacher/:id/details", h.GetDetailsByID)
+	e.GET("/teachers", h.List)
 	// todo: move this to department domain?
-	e.GET("/department/:id/teachers", handler.ListFromDept)
-	e.POST("/teacher", handler.Insert)
-	e.POST("/teachers", handler.InsertMany)
-	e.PATCH("/teacher/:id", handler.Edit)
+	e.GET("/department/:id/teachers", h.ListFromDept)
+	e.POST("/teacher", h.Insert)
+	e.POST("/teachers", h.InsertMany)
+	e.PATCH("/teacher/:id", h.Edit)
 }
 
 // List return all teachers
-func (th *teacherHandler) List(c echo.Context) error {
-	items, err := th.Usecase.List(c)
+func (h *handler) List(c echo.Context) error {
+	resp, err := h.Usecase.List(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
 
-	return c.JSON(http.StatusOK, items)
+	return c.JSON(http.StatusOK, resp)
 }
 
 // ListFromDept return all teachers from a specific department
-func (th *teacherHandler) ListFromDept(c echo.Context) error {
+func (h *handler) ListFromDept(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
 	}
 
-	items, err := th.Usecase.ListByDept(c, uint(id))
+	resp, err := h.Usecase.ListByDept(c, uint(id))
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
 
-	return c.JSON(http.StatusOK, items)
+	return c.JSON(http.StatusOK, resp)
 }
 
 // GetByID returns single teacher by ID
-func (th *teacherHandler) GetByID(c echo.Context) error {
+func (h *handler) GetByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
 	}
 
-	resp, err := th.Usecase.Get(c, uint(id))
+	resp, err := h.Usecase.Get(c, uint(id))
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
@@ -77,13 +77,13 @@ func (th *teacherHandler) GetByID(c echo.Context) error {
 }
 
 // GetDetailsByID returns single department by ID
-func (th *teacherHandler) GetDetailsByID(c echo.Context) error {
+func (h *handler) GetDetailsByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
 	}
 
-	resp, err := th.Usecase.GetDetails(c, uint(id))
+	resp, err := h.Usecase.GetDetails(c, uint(id))
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
@@ -92,8 +92,8 @@ func (th *teacherHandler) GetDetailsByID(c echo.Context) error {
 }
 
 // Insert a single teacher into the system
-func (th *teacherHandler) Insert(c echo.Context) error {
-	resp, err := th.Usecase.Insert(c)
+func (h *handler) Insert(c echo.Context) error {
+	resp, err := h.Usecase.Insert(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
@@ -102,8 +102,8 @@ func (th *teacherHandler) Insert(c echo.Context) error {
 }
 
 // InsertMany teachers into the system
-func (th *teacherHandler) InsertMany(c echo.Context) error {
-	resp, err := th.Usecase.InsertMany(c)
+func (h *handler) InsertMany(c echo.Context) error {
+	resp, err := h.Usecase.InsertMany(c)
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
@@ -112,13 +112,13 @@ func (th *teacherHandler) InsertMany(c echo.Context) error {
 }
 
 // Edit a single teacher
-func (th *teacherHandler) Edit(c echo.Context) error {
+func (h *handler) Edit(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(errors.RespondError(errors.ErrBadRequest))
 	}
 
-	resp, err := th.Usecase.Edit(c, uint(id))
+	resp, err := h.Usecase.Edit(c, uint(id))
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}

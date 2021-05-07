@@ -4,7 +4,7 @@ import (
 	"university/model"
 )
 
-type TeacherDetailsResp struct {
+type DetailPresenter struct {
 	ID          uint   `json:"id"`
 	Name        string `json:"name"`
 	Department  string `json:"department"`
@@ -12,28 +12,28 @@ type TeacherDetailsResp struct {
 }
 
 // Making more readable response object for the users to consume
-func ToTeacherResponse(teacher *model.Teacher) *TeacherResp {
-	return &TeacherResp{
-		ID:          teacher.ID,
-		Name:        teacher.Name,
-		Department:  teacher.Department,
-		Designation: teacher.Designation,
+func ToPresenter(data *model.Teacher) *Presenter {
+	return &Presenter{
+		ID:          data.ID,
+		Name:        data.Name,
+		Department:  data.Department,
+		Designation: data.Designation,
 	}
 }
 
-func ToTeachersResponse(teachers []model.Teacher) []TeacherResp {
-	res := []TeacherResp{}
-	for _, teacher := range teachers {
-		res = append(res, *ToTeacherResponse(&teacher))
+func ToPresenterList(data []model.Teacher) []Presenter {
+	res := []Presenter{}
+	for _, d := range data {
+		res = append(res, *ToPresenter(&d))
 	}
 	return res
 }
 
-func TeacherDetailsResponse(teacher *model.Teacher, dept *model.Department) *TeacherDetailsResp {
-	return &TeacherDetailsResp{
-		ID:          teacher.ID,
-		Name:        teacher.Name,
-		Department:  dept.Name,
-		Designation: teacher.Designation,
+func ToDetailPresenter(data *model.Teacher, deptData *model.Department) *DetailPresenter {
+	return &DetailPresenter{
+		ID:          data.ID,
+		Name:        data.Name,
+		Department:  deptData.Name,
+		Designation: data.Designation,
 	}
 }

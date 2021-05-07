@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type StudentResp struct {
+type Presenter struct {
 	ID         uint   `json:"id"`
 	Name       string `json:"name"`
 	Department uint   `json:"department"`
@@ -14,20 +14,20 @@ type StudentResp struct {
 }
 
 // converting payload to proper model object
-func ToStudentModel(sr *StudentResp) *model.Student {
+func ToModel(data *Presenter) *model.Student {
 	return &model.Student{
 		// let DB decide the ID, resetting ID to 0 if provided by client
 		Model:      gorm.Model{ID: 0},
-		Name:       sr.Name,
-		Department: sr.Department,
-		Clubs:      sr.Clubs,
+		Name:       data.Name,
+		Department: data.Department,
+		Clubs:      data.Clubs,
 	}
 }
 
-func ToStudentsModel(srs []StudentResp) []model.Student {
+func ToModelList(data []Presenter) []model.Student {
 	res := []model.Student{}
-	for _, dr := range srs {
-		res = append(res, *ToStudentModel(&dr))
+	for _, d := range data {
+		res = append(res, *ToModel(&d))
 	}
 	return res
 }
