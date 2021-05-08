@@ -2,25 +2,25 @@ package usecase
 
 import "university/app/system/repo"
 
-type SystemUsecase interface {
+type Usecase interface {
 	GetHealth() (*HealthResp, error)
 }
 
-type systemUsecase struct {
-	repo repo.SystemRepository
+type usecase struct {
+	repo repo.Repo
 }
 
-func NewSystemUsecase(repo repo.SystemRepository) SystemUsecase {
-	return &systemUsecase{
+func Init(repo repo.Repo) Usecase {
+	return &usecase{
 		repo: repo,
 	}
 }
 
-func (u *systemUsecase) GetHealth() (*HealthResp, error) {
+func (uc *usecase) GetHealth() (*HealthResp, error) {
 	resp := HealthResp{}
 
 	// check db
-	db_online, err := u.repo.DBCheck()
+	db_online, err := uc.repo.DBCheck()
 	resp.DBOnline = db_online
 	if err != nil {
 		return &resp, err

@@ -10,31 +10,31 @@ import (
 	"gorm.io/gorm"
 )
 
-// systemHandler represent the httphandler
-type systemHandler struct {
-	Usecase usecase.SystemUsecase
+// handler represent the httphandler
+type handler struct {
+	Usecase usecase.Usecase
 }
 
 // RegisterEndpoints register all the listed endpoints with application server
 func RegisterEndpoints(e *echo.Echo, db *gorm.DB) {
-	handler := &systemHandler{
-		Usecase: usecase.NewSystemUsecase(
-			repo.NewSystemRepository(db),
+	h := &handler{
+		Usecase: usecase.Init(
+			repo.Init(db),
 		),
 	}
 
-	e.GET("/", handler.Root)
-	e.GET("/h34l7h", handler.Health)
+	e.GET("/", h.Root)
+	e.GET("/h34l7h", h.Health)
 }
 
 // Root will let you see what you can slash 🐲
-func (sh *systemHandler) Root(c echo.Context) error {
+func (h *handler) Root(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{"message": "CLEAN study brings CLEAN results!"})
 }
 
 // Health will let you know the heart beats ❤️
-func (sh *systemHandler) Health(c echo.Context) error {
-	resp, err := sh.Usecase.GetHealth()
+func (h *handler) Health(c echo.Context) error {
+	resp, err := h.Usecase.GetHealth()
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
