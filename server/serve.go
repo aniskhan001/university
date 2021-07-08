@@ -19,22 +19,22 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
-func Serve() {
-	// load application configuration
-	if err := config.Load(); err != nil {
-		logrus.Error(err)
-		os.Exit(1)
-	}
+type Server interface {
+	Start(db *gorm.DB)
+}
 
-	// connect to database
-	if err := mysql.Connect(); err != nil {
-		logrus.Errorln(err)
-		os.Exit(1)
-	}
-	db := mysql.Get().DB
+type server struct {
+}
 
+func NewServer() Server {
+	return &server{}
+}
+
+// Insert a single item into the system
+func (s *server) Start(db *gorm.DB) {
 	// http server setup
 	e := echo.New()
 
@@ -49,7 +49,12 @@ func Serve() {
 	deptDelivery.RegisterEndpoints(e, db)
 	teacherDelivery.RegisterEndpoints(e, db)
 	studentDelivery.RegisterEndpoints(e, db)
-	clubDelivery.RegisterEndpoints(e, db)
+	clubServer := clubDelivery.NewEchoHandler(db)
+	clubServer.GET("/clube")
+	// 	e.GET("/clubs", h.List)
+	// 	e.POST("/club", h.Insert)
+	// 	e.PATCH("/club/:id", h.Edit)
+	// 	e.GET("/club/:id", h.GetByID)
 
 	// start http server
 	go func() {
@@ -67,4 +72,21 @@ func Serve() {
 
 	_ = e.Shutdown(ctx)
 	logrus.Infof("server shutdowns gracefully")
+}
+
+func Serve() {
+	// load application configuration
+	if err := config.Load(); err != nil {
+		logrus.Error(err)
+		os.Exit(1)
+	}
+
+	// connect to database
+	if err := mysql.Connect(); err != nil {
+		logrus.Errorln(err)
+		os.Exit(1)
+	}
+	db := mysql.Get().DB
+
+	NewServer().Start(db)
 }

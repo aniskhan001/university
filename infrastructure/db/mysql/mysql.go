@@ -16,10 +16,10 @@ type mysqlClient struct {
 }
 
 // db is the mysql instance
-var db *mysqlClient
+var db mysqlClient
 
 // Get returns the default mysqlClient currently in use
-func Get() *mysqlClient {
+func Get() mysqlClient {
 	return db
 }
 
@@ -72,6 +72,6 @@ func Connect() error {
 		return err
 	}
 
-	db = &mysqlClient{DB: instance}
+	db = mysqlClient{DB: instance}
 	return nil
 }
