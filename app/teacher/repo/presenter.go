@@ -7,10 +7,10 @@ import (
 )
 
 type Presenter struct {
-	ID          uint   `json:"id"`
-	Name        string `json:"name"`
-	Department  uint   `json:"department"`
-	Designation string `json:"designation"`
+	ID           uint   `json:"id"`
+	Name         string `json:"name"`
+	DepartmentID uint   `json:"department_id"`
+	Designation  string `json:"designation"`
 }
 
 type DetailPresenter struct {
@@ -22,10 +22,10 @@ type DetailPresenter struct {
 
 func ToPresenter(data *model.Teacher) *Presenter {
 	return &Presenter{
-		ID:          data.ID,
-		Name:        data.Name,
-		Department:  data.DepartmentID,
-		Designation: data.Designation,
+		ID:           data.ID,
+		Name:         data.Name,
+		DepartmentID: data.DepartmentID,
+		Designation:  data.Designation,
 	}
 }
 
@@ -51,7 +51,7 @@ func ToModel(data *Presenter) *model.Teacher {
 		// let DB decide the ID, resetting ID to 0 if provided by client
 		Model:        gorm.Model{ID: 0},
 		Name:         data.Name,
-		DepartmentID: data.Department,
+		DepartmentID: data.DepartmentID,
 		Designation:  data.Designation,
 	}
 }

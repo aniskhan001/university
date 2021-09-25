@@ -10,11 +10,8 @@ type Presenter struct {
 	ID           uint   `json:"id"`
 	Name         string `json:"name"`
 	DepartmentID uint   `json:"department_id"`
-	Department   string `json:"department"`
 	PresidentID  uint   `json:"president_id"`
-	President    string `json:"president"`
 	SecretaryID  uint   `json:"secretary_id"`
-	Secretary    string `json:"secretary"`
 }
 
 func ToPresenter(data *model.Club) *Presenter {

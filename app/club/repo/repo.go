@@ -24,10 +24,12 @@ func Init(DB *gorm.DB) Repo {
 	}
 }
 
+var fields = []string{"id", "name", "department_id", "president_id", "secretary_id"}
+
 func (db *repo) Get(id uint) (*model.Club, error) {
 	res := model.Club{}
 
-	if op := db.Select("id", "name").Where("id = ?", id).First(&res); op.Error != nil {
+	if op := db.Select(fields).Where("id = ?", id).First(&res); op.Error != nil {
 		return nil, op.Error
 	}
 
@@ -37,7 +39,7 @@ func (db *repo) Get(id uint) (*model.Club, error) {
 func (db *repo) GetAll() ([]model.Club, error) {
 	res := []model.Club{}
 
-	if op := db.Select("id", "name").Find(&res); op.Error != nil {
+	if op := db.Select(fields).Find(&res); op.Error != nil {
 		return nil, op.Error
 	}
 

@@ -9,14 +9,15 @@ import (
 type Presenter struct {
 	ID           uint   `json:"id"`
 	Name         string `json:"name"`
+	Roll         uint   `json:"roll"`
 	DepartmentID uint   `json:"department_id"`
-	Department   string `json:"department"`
 }
 
 func ToPresenter(data *model.Student) *Presenter {
 	return &Presenter{
 		ID:           data.ID,
 		Name:         data.Name,
+		Roll:         data.Roll,
 		DepartmentID: data.DepartmentID,
 	}
 }
@@ -34,6 +35,7 @@ func ToModel(data *Presenter) *model.Student {
 		// let DB decide the ID, resetting ID to 0 if provided by client
 		Model:        gorm.Model{ID: 0},
 		Name:         data.Name,
+		Roll:         data.Roll,
 		DepartmentID: data.DepartmentID,
 	}
 }

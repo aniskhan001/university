@@ -26,10 +26,12 @@ func Init(DB *gorm.DB) Repo {
 	}
 }
 
+var fields = []string{"id", "name", "roll", "department_id"}
+
 func (db *repo) Get(id uint) (*model.Student, error) {
 	res := model.Student{}
 
-	if op := db.Select("id", "name", "department").Where("id = ?", id).First(&res); op.Error != nil {
+	if op := db.Select(fields).Where("id = ?", id).First(&res); op.Error != nil {
 		return nil, op.Error
 	}
 
@@ -39,7 +41,7 @@ func (db *repo) Get(id uint) (*model.Student, error) {
 func (db *repo) GetAll() ([]model.Student, error) {
 	res := []model.Student{}
 
-	if op := db.Select("id", "name").Find(&res); op.Error != nil {
+	if op := db.Select(fields).Find(&res); op.Error != nil {
 		return nil, op.Error
 	}
 
@@ -49,7 +51,7 @@ func (db *repo) GetAll() ([]model.Student, error) {
 func (db *repo) GetAllFromDept(deptID uint) ([]model.Student, error) {
 	res := []model.Student{}
 
-	if op := db.Select("id", "name").Where("department = ?", deptID).Find(&res); op.Error != nil {
+	if op := db.Select(fields).Where("department = ?", deptID).Find(&res); op.Error != nil {
 		return nil, op.Error
 	}
 
