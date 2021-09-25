@@ -4,8 +4,12 @@ import "gorm.io/gorm"
 
 type Club struct {
 	gorm.Model
-	Name       string `json:"name"`
-	Department uint   `json:"department"`
-	President  uint   `json:"president"`
-	Secretary  uint   `json:"secretary"`
+	Name         string
+	DepartmentID uint
+	PresidentID  uint
+	SecretaryID  uint
+
+	Department Department `gorm:"foreignkey:DepartmentID"`
+	President  Student    `gorm:"foreignkey:PresidentID"`
+	Secretary  Student    `gorm:"foreignkey:SecretaryID"`
 }

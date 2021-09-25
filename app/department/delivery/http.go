@@ -24,11 +24,11 @@ func RegisterEndpoints(e *echo.Echo, db *gorm.DB) {
 		),
 	}
 
-	e.GET("/list", h.List)
-	e.POST("/create", h.Insert)
-	e.PATCH("/edit/:id", h.Edit)
-	e.POST("/create-many", h.InsertMany)
-	e.GET("/get/:id", h.GetByID)
+	e.GET("/depts", h.List)
+	e.POST("/dept", h.Insert)
+	e.PATCH("/dept/:id", h.Edit)
+	e.POST("/depts", h.InsertMany)
+	e.GET("/dept/:id", h.GetByID)
 }
 
 // List return all items

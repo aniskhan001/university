@@ -45,7 +45,7 @@ func (uc *usecase) GetDetails(c echo.Context, id uint) (*repo.DetailPresenter, e
 		return nil, err
 	}
 
-	deptRes, err := uc.deptRepo.Get(res.Department)
+	deptRes, err := uc.deptRepo.Get(res.DepartmentID)
 	if err != nil {
 		return nil, err
 	}

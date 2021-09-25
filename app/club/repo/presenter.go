@@ -7,20 +7,23 @@ import (
 )
 
 type Presenter struct {
-	ID         uint   `json:"id"`
-	Name       string `json:"name"`
-	Department uint   `json:"department"`
-	President  uint   `json:"president"`
-	Secretary  uint   `json:"secretary"`
+	ID           uint   `json:"id"`
+	Name         string `json:"name"`
+	DepartmentID uint   `json:"department_id"`
+	Department   string `json:"department"`
+	PresidentID  uint   `json:"president_id"`
+	President    string `json:"president"`
+	SecretaryID  uint   `json:"secretary_id"`
+	Secretary    string `json:"secretary"`
 }
 
 func ToPresenter(data *model.Club) *Presenter {
 	return &Presenter{
-		ID:         data.ID,
-		Name:       data.Name,
-		Department: data.Department,
-		President:  data.President,
-		Secretary:  data.Secretary,
+		ID:           data.ID,
+		Name:         data.Name,
+		DepartmentID: data.DepartmentID,
+		PresidentID:  data.PresidentID,
+		SecretaryID:  data.SecretaryID,
 	}
 }
 
@@ -35,10 +38,10 @@ func ToPresenterList(data []model.Club) []Presenter {
 func ToModel(data *Presenter) *model.Club {
 	return &model.Club{
 		// let DB decide the ID, resetting ID to 0 if provided by client
-		Model:      gorm.Model{ID: 0},
-		Name:       data.Name,
-		Department: data.Department,
-		President:  data.President,
-		Secretary:  data.Secretary,
+		Model:        gorm.Model{ID: 0},
+		Name:         data.Name,
+		DepartmentID: data.DepartmentID,
+		PresidentID:  data.PresidentID,
+		SecretaryID:  data.SecretaryID,
 	}
 }

@@ -66,8 +66,8 @@ func Connect() error {
 	if err = instance.AutoMigrate(
 		&model.Club{},
 		&model.Department{},
-		&model.Teacher{},
 		&model.Student{},
+		&model.Teacher{},
 	); err != nil {
 		return err
 	}

@@ -24,7 +24,7 @@ func ToPresenter(data *model.Teacher) *Presenter {
 	return &Presenter{
 		ID:          data.ID,
 		Name:        data.Name,
-		Department:  data.Department,
+		Department:  data.DepartmentID,
 		Designation: data.Designation,
 	}
 }
@@ -49,10 +49,10 @@ func ToDetailPresenter(data *model.Teacher, deptData *model.Department) *DetailP
 func ToModel(data *Presenter) *model.Teacher {
 	return &model.Teacher{
 		// let DB decide the ID, resetting ID to 0 if provided by client
-		Model:       gorm.Model{ID: 0},
-		Name:        data.Name,
-		Department:  data.Department,
-		Designation: data.Designation,
+		Model:        gorm.Model{ID: 0},
+		Name:         data.Name,
+		DepartmentID: data.Department,
+		Designation:  data.Designation,
 	}
 }
 

@@ -10,7 +10,6 @@ import (
 
 type Usecase interface {
 	Get(echo.Context, uint) (*repo.Presenter, error)
-	GetDetails(echo.Context, uint) (*repo.DetailPresenter, error)
 	List(echo.Context) ([]repo.Presenter, error)
 	ListByDept(echo.Context, uint) ([]repo.Presenter, error)
 	Insert(echo.Context) (*repo.Presenter, error)
@@ -37,20 +36,6 @@ func (uc *usecase) Get(c echo.Context, id uint) (*repo.Presenter, error) {
 	}
 
 	return repo.ToPresenter(res), nil
-}
-
-func (uc *usecase) GetDetails(c echo.Context, id uint) (*repo.DetailPresenter, error) {
-	res, err := uc.repo.Get(id)
-	if err != nil {
-		return nil, err
-	}
-
-	deptRes, err := uc.deptRepo.Get(res.Department)
-	if err != nil {
-		return nil, err
-	}
-
-	return repo.ToDetailPresenter(res, deptRes), nil
 }
 
 func (uc *usecase) List(c echo.Context) ([]repo.Presenter, error) {

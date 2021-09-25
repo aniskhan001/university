@@ -27,7 +27,6 @@ func RegisterEndpoints(e *echo.Echo, db *gorm.DB) {
 	}
 
 	e.GET("/student/:id", h.GetByID)
-	e.GET("/student/:id/details", h.GetDetailsByID)
 	e.GET("/students", h.List)
 	// todo: move this to department domain?
 	e.GET("/department/:id/students", h.ListFromDept)
@@ -69,21 +68,6 @@ func (h *handler) GetByID(c echo.Context) error {
 	}
 
 	resp, err := h.Usecase.Get(c, uint(id))
-	if err != nil {
-		return c.JSON(errors.RespondError(err))
-	}
-
-	return c.JSON(http.StatusOK, resp)
-}
-
-// GetDetailsByID returns single department by ID
-func (h *handler) GetDetailsByID(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		return c.JSON(errors.RespondError(errors.ErrBadRequest))
-	}
-
-	resp, err := h.Usecase.GetDetails(c, uint(id))
 	if err != nil {
 		return c.JSON(errors.RespondError(err))
 	}
