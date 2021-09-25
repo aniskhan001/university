@@ -10,7 +10,7 @@ import (
 var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "serves the web server",
-	Long:  `Start serving the web traffics`,
+	Long:  "Start serving the web traffics",
 	Run: func(cmd *cobra.Command, args []string) {
 		server.Serve()
 	},

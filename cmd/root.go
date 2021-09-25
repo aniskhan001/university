@@ -10,8 +10,8 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "university",
-	Short: "ka-bi-kha",
-	Long:  "kajer binimoye khadyo",
+	Short: "University",
+	Long:  "A sample CRUD application that provides common University management functionalities",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
