@@ -1,13 +1,50 @@
 # University [WIP] 🎓
 
-A sample project in Go that tries to follow the [CLEAN architecture][clean-architecture] and the [12-factor methodology][12-factor-app] using [SOLID design principle][solid-design-principle]. This application offers to manage entities(departments, clubs, teachers, students, etc.) in a university by providing a REST API.
+A sample project in Go that tries to follow:
+
+- [CLEAN architecture][clean-architecture]
+- [SOLID design principle][solid-design-principle]
+- [12-factor methodology][12-factor-app]
+
+This application offers to manage entities(departments, clubs, teachers, students, etc.) in a university by providing a REST API.
+
+## Project Structure
+
+The project is separated into different layers. Outside layers can be dependant on the inner layers. But the inner layers should not know the implementation details of outer layers. The flow of data can be bidirectional, but this does not mean that the inner layers are dependant on the outer layers.
+
+![clean architecture](./doc/clean-arch.png)
+_<center>Fig: CLEAN architecture way of representing this application</center>_
+
+### Models (domain centric)
+
+![Models](./doc/models.png)
+
+### Use cases (domain centric)
+
+![Use cases](./doc/use-cases.png)
+
+### Repositories (database)
+
+![Repositories](./doc/repos.png)
+
+### Presenters
+
+![Presenters](./doc/presenters.png)
+
+### Infrastructure
+
+![Infrastructure](./doc/infra.png)
+
+### Delivery
+
+![Delivery](./doc/delivery.png)
 
 ## Configuration
 
-* This project uses `.editorconfig`
-* This project uses a separate `dev.Dockerfile` for hot reload
-* This project uses a Relational Database (MySQL) to store data & information
-* This project uses `infrasctructure/config/config.local.yml` to load application configuration
+- This project uses `.editorconfig`
+- This project uses a separate `dev.Dockerfile` for hot reload
+- This project uses a Relational Database (MySQL) to store data & information
+- This project uses `infrasctructure/config/config.local.yml` to load application configuration
 
 ## Development
 
@@ -31,6 +68,14 @@ Whenever changes are detected, it tries to run the build command again so that i
 volumes:
     - ./:/project
 ```
+
+## TO-DO
+
+- [ ] Authentication
+- [ ] Caching mechanism
+- [ ] Deployment configuration
+- [ ] Detail presentation of data (actual value instead of IDs) in API response
+- [ ] Unit tests
 
 <!-- external links -->
 [clean-architecture]: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
