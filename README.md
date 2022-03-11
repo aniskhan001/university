@@ -13,7 +13,7 @@ This application offers to manage entities(departments, clubs, teachers, student
 The project is separated into different layers. Outside layers can be dependant on the inner layers. But the inner layers should not know the implementation details of outer layers. The flow of data can be bidirectional, but this does not mean that the inner layers are dependant on the outer layers.
 
 ![clean architecture](./doc/clean-arch.png)
-_<center>Fig: CLEAN architecture way of representing this application</center>_
+_<p align="center">Fig: CLEAN architecture way of representing this application</p>_
 
 ### Models (domain centric)
 
