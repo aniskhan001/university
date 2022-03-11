@@ -1,7 +1,5 @@
-ARG GO_VERSION=1.17.1
-
 # Start from base golang image
-FROM golang:${GO_VERSION}-alpine AS builder
+FROM golang:1.17.1-alpine AS builder
 
 # Create the user and group files that will be used in the running container to
 # run the process as an unprivileged user.
