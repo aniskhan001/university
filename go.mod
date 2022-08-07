@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/labstack/echo/v4 v4.7.2
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
 	gorm.io/driver/mysql v1.3.5
@@ -69,7 +69,7 @@ require (
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
 	golang.org/x/net v0.0.0-20220520000938-2e3eb7b945c2 // indirect
 	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5 // indirect
-	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
 	golang.org/x/xerrors v0.0.0-20220517211312-f3a8303e98df // indirect
