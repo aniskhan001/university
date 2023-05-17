@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/labstack/echo/v4 v4.10.2
-	github.com/sirupsen/logrus v1.9.0
+	github.com/sirupsen/logrus v1.9.1
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.15.0
 	gorm.io/driver/mysql v1.5.0
