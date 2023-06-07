@@ -1,7 +1,7 @@
 # DO NOT use in production!
 # Dockerfile for local development
 
-FROM golang:1.20.4
+FROM golang:1.20.5
 
 # install the watcher
 RUN go install github.com/githubnemo/CompileDaemon@v1.2.1
