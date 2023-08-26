@@ -1,5 +1,5 @@
 # Start from base golang image
-FROM golang:1.20.5-alpine AS builder
+FROM golang:1.21.0-alpine AS builder
 
 # Create the user and group files that will be used in the running container to
 # run the process as an unprivileged user.
