@@ -8,7 +8,7 @@ require (
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.18.1
 	gorm.io/driver/mysql v1.5.1
-	gorm.io/gorm v1.25.4
+	gorm.io/gorm v1.25.9
 )
 
 require (
