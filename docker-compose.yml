@@ -18,7 +18,7 @@ services:
 
   db:
     container_name: university_mysql
-    image: mysql:9.2
+    image: mysql:9.3
     ports:
       - 3308:3306
     environment:
